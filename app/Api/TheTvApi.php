@@ -28,14 +28,14 @@ class TheTvApi {
       
     }
     
-    protected function getCurl($uri)
+    protected function getCurl($uri, $lang = 'it')
     {
         return Curl::to('https://api.thetvdb.com/' . ltrim($uri, '/'))
                     ->asJson()
             
              // withHeader permette di mandare i dati in base al codice inserito
             
-                    ->withHeader('Accept-Language: it')  // Imposta la lingua italiana 
+                    ->withHeader('Accept-Language: ' . $lang)  // Imposta la lingua italiana 
                     ->withHeader('Authorization: Bearer ' . $this->getToken());  // Questa è un'autenticazione che permette di far funzionare la ricerca prendendo il token
     }
     
@@ -60,7 +60,7 @@ class TheTvApi {
     
     public function getPosters($id)  // Per salvare i posters al database
     {
-        $response =  $this->getCurl('/series/' . $id . '/images/query')
+        $response =  $this->getCurl('/series/' . $id . '/images/query', 'en')
             
                      ->withData([
                          'keyType' => 'poster' 
