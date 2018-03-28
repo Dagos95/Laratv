@@ -68,7 +68,7 @@ class TheTvApi {
             
                     ->get();
         
-        return collect(!empty($response->data) ? $response->data : [])->map(function($istem){   // Collect trasforma l'array in collection
+        return collect(!empty($response->data) ? $response->data : [])->map(function($item){   // Collect trasforma l'array in collection
             $item->fileName = 'https://www.thetvdb.com/banners/' . $item->fileName;
             $item->thumbnail = 'https://www.thetvdb.com/banners/' . $item->thumbnail;
             return $item;
@@ -77,7 +77,9 @@ class TheTvApi {
     
     public function getPoster($id)  // Per salvare i posters al database
     {
-        return $this->getPosters($id)->first();   // first permette di ricevere il primo elemento dell'array
+        return $this->getPosters($id)
+                    ->sortByDesc('ratingsInfo.avarange')
+                    ->first();   // first permette di ricevere il primo elemento dell'array
     }
     
 }

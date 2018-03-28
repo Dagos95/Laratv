@@ -42,7 +42,7 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'jwt',  // Inserire jwt al posto del token
             'provider' => 'users',
         ],
     ],

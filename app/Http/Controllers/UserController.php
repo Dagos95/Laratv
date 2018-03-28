@@ -100,7 +100,13 @@ class UserController extends Controller
         // 2. Se non esiste salvare i dati sul db
         if( empty($serie)){
             
-            // L avariabile api prende il percorso da use (in cima al documento)
+            $serie = new Serie([
+               'thetv_id' => $thetv_id 
+            ]);
+            $serie->fetchData();
+            $serie->save();
+            
+         /*   // L avariabile api prende il percorso da use (in cima al documento)
             $api = new TheTvApi;
             
             // 2.1. Recupero i dati sulla serie dalla API
@@ -122,7 +128,7 @@ class UserController extends Controller
                 'thetv_id' => $thetv_id,
                 'title' => $info_serie->seriesName,
                 'poster_url' => !empty($poster->fileName) ? $poster->fileName : '',
-            ]);    
+            ]);   */ 
             
         } 
         

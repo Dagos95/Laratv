@@ -43,4 +43,9 @@ Route::group(['middleware' => 'auth'], function(){
     Route::put('/profilo/edit', 'UserController@editUpdate')->name('profile.update');
     
     
+    Route::model('serie', App\Serie::class);
+    
+    Route::get('/serie/{serie}', 'SerieController@show');
+    
+    
 });
