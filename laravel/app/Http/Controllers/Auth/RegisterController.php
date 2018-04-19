@@ -49,8 +49,8 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        $request = new use RegistrationRequest;
-        
+        $request = new RegistrationRequest;
+
         return Validator::make($data, $request->rules());  // andrà a prendere le validazioni in laravel > app > Http > Requests > RegistrationRequest.php
     }
 
