@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
+use App\Http\Requests\RegistrationRequest;
+
+use App\User;
+
 class AuthenticateController extends Controller
 {
     public function authenticate()
@@ -28,6 +32,19 @@ class AuthenticateController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60
         ]);
+    }
+    
+    public function registration(RegistrationRequest $request){
+        $user = User::create([
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'nickname' => $request->nickname,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+        
+         $token = auth()->login($user);
+         return $this->respondWithToken($token);
     }
     
     public function refresh()   // Permette di aggiornare il token

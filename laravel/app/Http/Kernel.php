@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            \App\Http\Middleware\ApiMiddleware::class,
             'throttle:60,1',   // Sono 60 richieste al minuto
             'bindings',
         ],

@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
+use App\Http\Requests\RegistrationRequest;
+
 class RegisterController extends Controller
 {
     /*
@@ -47,13 +49,9 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
-            'nickname' => 'required|string|max:255|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+        $request = new use RegistrationRequest;
+        
+        return Validator::make($data, $request->rules());  // andrà a prendere le validazioni in laravel > app > Http > Requests > RegistrationRequest.php
     }
 
     /**

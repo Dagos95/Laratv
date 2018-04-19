@@ -22,7 +22,7 @@ use Illuminate\Http\Request;
 Route::group(['namespace' => 'Api'], function(){
     
     Route::post('authenticate', 'AuthenticateController@authenticate');
-    
+    Route::post('registration', 'AuthenticateController@registration');
     
     
     Route::group(
@@ -37,8 +37,34 @@ Route::group(['namespace' => 'Api'], function(){
               return response()->json($userResource);
            });
             Route::post('refresh', 'AuthenticateController@refresh');
+            
+            Route::bind('series', function($hetv_id){
+                
+                $serie = App\Serie::where('thetv_id', $thetv_id)->first();
+                
+                if( empty($serie)){
+            
+                $serie = new App\Serie([
+                   'thetv_id' => $thetv_id 
+                ]);
+                $serie->fetchData();
+                $serie->save();
+                    
+                }
+                
+                return $serie;
+                    
+            });
+            
+            Route::resource('series', 'SerieController', [ 'only' => [ 'index', 'show' ] ]);
+            
+            Route::post('series/{series}/follow', 'SerieController@follow');
+            
+            Route::post('series/{series}/unfollow', 'SerieController@unfollow');
         }
     );
+    
+    
    
 });
 
