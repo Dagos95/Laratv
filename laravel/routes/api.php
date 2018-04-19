@@ -20,51 +20,50 @@ use Illuminate\Http\Request;
 
 // Visto che in defoult AuthenticateController@authenticate viene ricercato direttamente dentro la cartella Controller, bisogna specificare la percorso della cartella Api
 Route::group(['namespace' => 'Api'], function(){
-    
+
     Route::post('authenticate', 'AuthenticateController@authenticate');
     Route::post('registration', 'AuthenticateController@registration');
-    
-    
+
+
     Route::group(
         ['middleware' => 'auth:api'], function()
         {
            Route::get('me', function(){
-               
+
                $user = auth('api')->user();
-               
+
                $userResource = new App\Http\Resources\UserResource($user);
-               
+
               return response()->json($userResource);
            });
             Route::post('refresh', 'AuthenticateController@refresh');
-            
+
             Route::bind('series', function($hetv_id){
-                
-                $serie = App\Serie::where('thetv_id', $thetv_id)->first();
-                
+
+                $serie = App\Serie::where('thetvdb_id', $thetvdb_id)->first();
+
                 if( empty($serie)){
-            
+
                 $serie = new App\Serie([
-                   'thetv_id' => $thetv_id 
+                   'thetvdb_id' => $thetvdb_id
                 ]);
                 $serie->fetchData();
                 $serie->save();
-                    
+
                 }
-                
+
                 return $serie;
-                    
+
             });
-            
+
             Route::resource('series', 'SerieController', [ 'only' => [ 'index', 'show' ] ]);
-            
+
             Route::post('series/{series}/follow', 'SerieController@follow');
-            
+
             Route::post('series/{series}/unfollow', 'SerieController@unfollow');
         }
     );
-    
-    
-   
-});
 
+
+
+});

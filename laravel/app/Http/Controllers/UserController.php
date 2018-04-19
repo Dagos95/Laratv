@@ -89,19 +89,19 @@ class UserController extends Controller
                ->with('message-success', 'Profilo aggiornato');
     }
 
-    public function followSerie($thetv_id)
+    public function followSerie($thetvdb_id)
     {
         $user = auth()->user();
 
         // 1. Cercare serie con id esterno $thetv_id
         // Se il punto uno è andato a buon fine va direttamente al punto 3, altrimenti entra dentro if (quindi passa al punto 2)
-        $serie = Serie::where('thetvdb_id', $thetv_id)->first();
+        $serie = Serie::where('thetvdb_id', $thetvdb_id)->first();
 
         // 2. Se non esiste salvare i dati sul db
         if( empty($serie)){
 
             $serie = new Serie([
-               'thetvdb_id' => $thetv_id
+               'thetvdb_id' => $thetvdb_id
             ]);
             $serie->fetchData();
             $serie->save();
@@ -138,13 +138,13 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function unfollowSerie($thetv_id)
+    public function unfollowSerie($thetvdb_id)
     {
         // 1. Recupero l'utente loggato
         $user = auth()->user();
 
         // 2. Recuper la serie dal database
-        $serie = Serie::where('thetvdb_id', $thetv_id)->first();
+        $serie = Serie::where('thetvdb_id', $thetvdb_id)->first();
 
         // 3. Se trovo la serie tolgo l'associazione con l'utente
         if($serie){

@@ -15,7 +15,7 @@ class CreateSeriesTable extends Migration
     {
         Schema::create('series', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('thetv_id')->unsigned()->index();
+            $table->integer('thetvdb_id')->unsigned()->index();
             $table->string('title');
             $table->string('poster_url');
             $table->timestamps();
