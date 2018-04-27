@@ -24,7 +24,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="form-group row">
                             <label for="surname" class="col-md-4 col-form-label text-md-right">Surname</label>
 
@@ -38,7 +38,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="form-group row">
                             <label for="nickname" class="col-md-4 col-form-label text-md-right">Nickname</label>
 
